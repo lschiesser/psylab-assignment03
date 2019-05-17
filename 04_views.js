@@ -48,7 +48,9 @@ const instructions = babeViews.view_generator('instructions', {
             Press f  if they are same and press j if they are different.
             <br />
             <br />
-            This experiment is comprised of 5 trials`,
+            We are now going to give you an opportunity to practice.
+            The practice session is comprised of 3 trials.
+            After every trial you will get feedback on your performance.`,
 
     buttonText: 'go to trials'
 });
@@ -115,7 +117,32 @@ const key_press_2A = babeViews.view_generator('key_press', {
     // name and trial_type should be identical to the variable name
     name: 'key_press',
     trial_type: 'key_press',
-    data: _.shuffle(trial_info.key_press)
+    data: _.shuffle(trial_info.key_press),
+    pause: 1000,
+    fix_duration: 500
+});
+
+const key_press_trial = babeViews.view_generator('key_press', {
+  trials: trial_practice.key_press.length,
+  name: 'key_press',
+  trial_type: 'key_press',
+  data: _.shuffle(trial_practice.key_press),
+  pause: 1000,
+  fix_duration: 500,
+  hook: {
+      after_response_enabled: check_response
+  }
+});
+
+const trial_begin = babeViews.view_generator('instructions',{
+    trials: 1,
+    name: 'trial_begin',
+    title: 'Good Job!',
+    text:  `We will start the actual experiment now!
+    <br />
+    Remember we will not continue to tell you wether your answers were correct from here on.
+    The works exactly the same as the trials you just did! `,
+    buttonText: 'go to trials'
 });
 
 // There are many more templates available:
